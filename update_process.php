@@ -18,7 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $target_dir = "uploads/";
     $user_session = $_SESSION['user_id'];
-    $profilePicture = $user['profile_picture']; // lấy ảnh hiện tại từ cơ sở dữ liệu
+    //$profilePicture = $user['profile_picture']; // lấy ảnh hiện tại từ cơ sở dữ liệu
+
+    $sql = "SELECT * FROM user WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $profilePicture = $result->fetch_assoc()['profile_picture'];
 
     $uploadOk = 1;
    
